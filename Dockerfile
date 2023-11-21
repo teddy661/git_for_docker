@@ -1,4 +1,4 @@
-FROM  nvidia/cuda:11.8.0-cudnn8-devel-rockylinux8 AS build
+FROM nvidia/cuda:12.2.2-cudnn8-runtime-rockylinux8 AS build
 SHELL ["/bin/bash", "-c"]
 RUN dnf install epel-release -y
 RUN /usr/bin/crb enable
@@ -24,15 +24,15 @@ RUN dnf install \
                 uuid \
                 tcl-devel tcl tk-devel tk \
                 sqlite-devel \
-                gcc-toolset-11 \
+                gcc-toolset-12 \
                 xmlto \
                 asciidoc \
                 docbook2X \
                 gdbm-devel gdbm -y
 WORKDIR /tmp/bgit
-ENV G_VERSION=2.42.0
+ENV G_VERSION=2.43.0
 RUN wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-${G_VERSION}.tar.xz
 RUN tar -xf git-${G_VERSION}.tar.xz
 WORKDIR /tmp/bgit/git-${G_VERSION}
-RUN source scl_source enable gcc-toolset-11 && make -j 8 prefix=/opt/git profile
-RUN source scl_source enable gcc-toolset-11 && make -j 8 prefix=/opt/git PROFILE=BUILD install install-doc
+RUN source scl_source enable gcc-toolset-12 && make -j 8 prefix=/opt/git profile
+RUN source scl_source enable gcc-toolset-12 && make -j 8 prefix=/opt/git PROFILE=BUILD install install-doc
