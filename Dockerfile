@@ -30,7 +30,7 @@ RUN dnf install \
                 docbook2X \
                 gdbm-devel gdbm -y
 WORKDIR /tmp/bgit
-ENV G_VERSION=2.45.0
+ENV G_VERSION=2.45.1
 RUN wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-${G_VERSION}.tar.xz
 RUN tar -xf git-${G_VERSION}.tar.xz
 WORKDIR /tmp/bgit/git-${G_VERSION}
