@@ -1,15 +1,16 @@
-FROM nvidia/cuda:12.2.2-cudnn8-runtime-rockylinux8 AS build
+FROM nvidia/cuda:12.6.0-cudnn-devel-rockylinux9 AS build
 SHELL ["/bin/bash", "-c"]
-RUN dnf install epel-release -y
-RUN /usr/bin/crb enable
-RUN dnf update --disablerepo=cuda -y
+RUN yum install dnf-plugins-core -y && \
+    dnf config-manager --enable crb -y && \
+    dnf install epel-release -y && \
+    dnf --disablerepo=cuda update -y && \
+    /usr/bin/crb enable 
 RUN dnf install \
-                curl \
+                expat-devel \
+                curl-devel \
                 perl-devel \
                 libcurl-devel \
-                expat-devel \
                 gettext-devel \
-                gcc \
                 cmake \
                 openssl-devel \
                 bzip2-devel \
@@ -21,16 +22,18 @@ RUN dnf install \
                 make \
                 ncurses ncurses-devel \
                 readline-devel \
-                uuid \
-                tcl-devel tcl tk-devel tk \
+                uuid uuid-devel \
+                tcl-devel tcl  \
+                tk-devel tk \
                 sqlite-devel \
                 gcc-toolset-12 \
                 xmlto \
                 asciidoc \
                 docbook2X \
-                gdbm-devel gdbm -y
+                gdbm-devel gdbm -y &&\
+                dnf clean all
 WORKDIR /tmp/bgit
-ENV G_VERSION=2.46.0
+ENV G_VERSION=2.48.1
 RUN wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-${G_VERSION}.tar.xz
 RUN tar -xf git-${G_VERSION}.tar.xz
 WORKDIR /tmp/bgit/git-${G_VERSION}
