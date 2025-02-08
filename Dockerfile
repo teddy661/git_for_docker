@@ -9,6 +9,7 @@ RUN dnf install \
                 expat-devel \
                 curl-devel \
                 perl-devel \
+                perl-ExtUtils-MakeMaker \
                 libcurl-devel \
                 gettext-devel \
                 cmake \
@@ -37,5 +38,8 @@ ENV G_VERSION=2.48.1
 RUN wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-${G_VERSION}.tar.xz
 RUN tar -xf git-${G_VERSION}.tar.xz
 WORKDIR /tmp/bgit/git-${G_VERSION}
-RUN source scl_source enable gcc-toolset-12 && make -j 8 prefix=/opt/git profile
-RUN source scl_source enable gcc-toolset-12 && make -j 8 prefix=/opt/git PROFILE=BUILD install install-doc
+# RUN source scl_source enable gcc-toolset-12 && make -j 8 prefix=/opt/git profile
+# RUN source scl_source enable gcc-toolset-12 && make -j 8 prefix=/opt/git PROFILE=BUILD install install-doc
+RUN source scl_source enable gcc-toolset-12 && make -j 8 prefix=/opt/git all
+RUN source scl_source enable gcc-toolset-12 && make -j 8 prefix=/opt/git install install-doc
+
