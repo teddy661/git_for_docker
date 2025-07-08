@@ -32,7 +32,7 @@ RUN yum install dnf-plugins-core -y && \
                 gdbm-devel gdbm -y &&\
 		dnf clean all
 WORKDIR /tmp/bgit
-ENV G_VERSION=2.50.0
+ENV G_VERSION=2.50.1
 RUN wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-${G_VERSION}.tar.xz
 RUN tar -xf git-${G_VERSION}.tar.xz
 WORKDIR /tmp/bgit/git-${G_VERSION}
