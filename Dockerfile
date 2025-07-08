@@ -1,4 +1,4 @@
-FROM nvidia/cuda:12.6.0-cudnn-devel-rockylinux9 AS build
+FROM nvidia/cuda:12.4.1-cudnn-devel-rockylinux9 AS build
 SHELL ["/bin/bash", "-c"]
 RUN yum install dnf-plugins-core -y && \
     dnf config-manager --enable crb -y && \
@@ -32,7 +32,7 @@ RUN yum install dnf-plugins-core -y && \
                 gdbm-devel gdbm -y &&\
 		dnf clean all
 WORKDIR /tmp/bgit
-ENV G_VERSION=2.48.1
+ENV G_VERSION=2.50.0
 RUN wget https://mirrors.edge.kernel.org/pub/software/scm/git/git-${G_VERSION}.tar.xz
 RUN tar -xf git-${G_VERSION}.tar.xz
 WORKDIR /tmp/bgit/git-${G_VERSION}
